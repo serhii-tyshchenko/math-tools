@@ -5,11 +5,16 @@ import {
   getSubtractionInColumnResult,
   getMultiplicationInColumnResult,
 } from './js/operations/index.js';
-import { OPERATION_LABEL_MAP, OPERATION_MAP } from './js/constants.js';
+import {
+  OPERATION_LABEL_MAP,
+  OPERATION_MAP,
+  OPERATION_SYMBOL_MAP,
+} from './js/constants.js';
 
 const FORM = document.querySelector('#form');
 const INPUT_CONTAINER = document.querySelector('#input-container');
 const OPERATION_SELECTOR = document.querySelector('#operation-selector');
+const OPERATION_SYMBOL = document.querySelector('#operation-symbol');
 const INPUT_FIELD_1 = document.querySelector('#number-1');
 const INPUT_FIELD_2 = document.querySelector('#number-2');
 const COPY_RESULT_BUTTON = document.querySelector('#copy-result');
@@ -38,6 +43,7 @@ OPERATION_SELECTOR.addEventListener('change', () => {
   INPUT_CONTAINER.classList.remove('invisible');
   OUTPUT_CONTAINER.classList.add('invisible');
   const operation = OPERATION_SELECTOR.value;
+  OPERATION_SYMBOL.textContent = OPERATION_SYMBOL_MAP[operation];
 
   switch (operation) {
     case OPERATION_MAP.PRIME_FACTORS:
