@@ -18,6 +18,10 @@
       border-bottom: 2px solid var(--color-primary);
     }
 
+    &.td-border-top {
+      border-top: 2px solid var(--color-primary);
+    }
+
     &.td-border-bottom-left {
       border-bottom: 2px solid var(--color-primary);
       border-left: 2px solid var(--color-primary);

@@ -3,6 +3,7 @@ import {
   getGcdLcmResult,
   getAdditionInColumnResult,
   getSubtractionInColumnResult,
+  getMultiplicationInColumnResult,
 } from './js/operations/index.js';
 import { OPERATION_LABEL_MAP, OPERATION_MAP } from './js/constants.js';
 
@@ -22,6 +23,8 @@ const OPERATION_HANDLER_MAP = {
     getAdditionInColumnResult(num1, num2),
   [OPERATION_MAP.SUBSTRACTION_IN_COLUMN]: (num1, num2) =>
     getSubtractionInColumnResult(num1, num2),
+  [OPERATION_MAP.MULTIPLICATION_IN_COLUMN]: (num1, num2) =>
+    getMultiplicationInColumnResult(num1, num2),
 };
 
 Object.entries(OPERATION_LABEL_MAP).forEach(([operation, label]) => {
@@ -44,6 +47,7 @@ OPERATION_SELECTOR.addEventListener('change', () => {
     case OPERATION_MAP.GCD_LCM:
     case OPERATION_MAP.ADDITION_IN_COLUMN:
     case OPERATION_MAP.SUBSTRACTION_IN_COLUMN:
+    case OPERATION_MAP.MULTIPLICATION_IN_COLUMN:
       INPUT_FIELD_2.classList.remove('d-none');
       INPUT_FIELD_2.setAttribute('required', true);
       break;

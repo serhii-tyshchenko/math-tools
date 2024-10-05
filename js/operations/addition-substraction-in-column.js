@@ -1,7 +1,9 @@
-import { generateEmptyRow } from './utils.js';
-
-const getMaxNumberLength = (number1, number2) =>
-  Math.max(number1.toString().length, number2.toString().length);
+import {
+  generateEmptyRow,
+  getSumOfTwoNumbers,
+  getDifferenceOfTwoNumbers,
+  getMaxNumberLength,
+} from './utils.js';
 
 const generateNumber1Row = ({ number, totalCells, shouldAddBorder, sign }) => {
   const cells = number
@@ -79,7 +81,7 @@ export const getSubtractionInColumnResult = (number1, number2) =>
   getOperationInColumnResult({
     number1,
     number2,
-    result: number1 - number2,
+    result: getDifferenceOfTwoNumbers(number1, number2),
     sign: '–',
   });
 
@@ -87,6 +89,6 @@ export const getAdditionInColumnResult = (number1, number2) =>
   getOperationInColumnResult({
     number1,
     number2,
-    result: number1 + number2,
+    result: getSumOfTwoNumbers(number1, number2),
     sign: '+',
   });
