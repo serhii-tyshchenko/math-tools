@@ -1,6 +1,8 @@
 import {
   getPrimeFactorsResult,
   getGcdLcmResult,
+  getAdditionInColumnResult,
+  getSubtractionInColumnResult,
 } from './js/operations/index.js';
 import { OPERATION_LABEL_MAP, OPERATION_MAP } from './js/constants.js';
 
@@ -16,6 +18,10 @@ const OUTPUT_BLOCK = document.querySelector('#output');
 const OPERATION_HANDLER_MAP = {
   [OPERATION_MAP.PRIME_FACTORS]: (num) => getPrimeFactorsResult(num),
   [OPERATION_MAP.GCD_LCM]: (num1, num2) => getGcdLcmResult(num1, num2),
+  [OPERATION_MAP.ADDITION_IN_COLUMN]: (num1, num2) =>
+    getAdditionInColumnResult(num1, num2),
+  [OPERATION_MAP.SUBSTRACTION_IN_COLUMN]: (num1, num2) =>
+    getSubtractionInColumnResult(num1, num2),
 };
 
 Object.entries(OPERATION_LABEL_MAP).forEach(([operation, label]) => {
@@ -36,6 +42,8 @@ OPERATION_SELECTOR.addEventListener('change', () => {
       INPUT_FIELD_2.removeAttribute('required');
       break;
     case OPERATION_MAP.GCD_LCM:
+    case OPERATION_MAP.ADDITION_IN_COLUMN:
+    case OPERATION_MAP.SUBSTRACTION_IN_COLUMN:
       INPUT_FIELD_2.classList.remove('d-none');
       INPUT_FIELD_2.setAttribute('required', true);
       break;

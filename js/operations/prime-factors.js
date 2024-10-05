@@ -1,3 +1,5 @@
+import { generateEmptyRow } from './utils.js';
+
 const EMPTY_SYMBOL = 'x';
 
 const getPrimeFactors = (number) => {
@@ -50,9 +52,7 @@ const createPrimeFactorsTable = (primeFactors) => {
     return `<tr><td></td>${numberCells}${factorCells}<td></td></tr>`;
   });
 
-  const emptyRow = `<tr>${Array(maxLengthNumber + maxLengthFactor + 2)
-    .fill('<td></td>')
-    .join('')}</tr>`;
+  const emptyRow = generateEmptyRow(maxLengthNumber + maxLengthFactor + 2);
 
   return `
     <table class="tp-cells">
