@@ -5,6 +5,7 @@ import {
   getSubtractionInColumnResult,
   getMultiplicationInColumnResult,
   getConvertStringToFractionResult,
+  getNormalizeExpressionResult,
 } from './js/operations/index.js';
 import {
   OPERATION_LABEL_MAP,
@@ -34,6 +35,8 @@ const OPERATION_HANDLER_MAP = {
     getMultiplicationInColumnResult(+num1, +num2),
   [OPERATION_MAP.CONVERT_STRING_TO_FRACTION]: (num1, num2, expression) =>
     getConvertStringToFractionResult(expression),
+  [OPERATION_MAP.NORMALIZE_EXPRESSION]: (num1, num2, expression) =>
+    getNormalizeExpressionResult(expression),
 };
 
 Object.entries(OPERATION_LABEL_MAP).forEach(([operation, label]) => {
@@ -78,6 +81,12 @@ OPERATION_SELECTOR.addEventListener('change', () => {
       hideField(INPUT_FIELD_2);
       showField(EXPRESSION_FIELD);
       EXPRESSION_FIELD.placeholder = 'Введіть вираз, наприклад 1/2 + 1/2 = 1';
+      break;
+    case OPERATION_MAP.NORMALIZE_EXPRESSION:
+      hideField(INPUT_FIELD_1);
+      hideField(INPUT_FIELD_2);
+      showField(EXPRESSION_FIELD);
+      EXPRESSION_FIELD.placeholder = 'Введіть вираз, наприклад 1x + 2x = 3x';
       break;
     default:
       break;

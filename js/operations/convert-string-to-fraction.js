@@ -1,11 +1,13 @@
-import { addEmToLetter } from './utils.js';
+import { addEmToVariables } from './utils.js';
 
-const formatString = (str) => {
-  return addEmToLetter(str)
-    .replace('+', ' + ')
-    .replace('-', ' - ')
-    .replace('*', ' · ');
-};
+const formatString = (str, withNBSP = false) =>
+  addEmToVariables(str)
+    .replace('+', withNBSP ? '&nbsp;+&nbsp' : ' + ')
+    .replace('-', withNBSP ? '&nbsp;–&nbsp' : ' - ')
+    .replace('–', withNBSP ? '&nbsp;–&nbsp' : ' – ')
+    .replace('*', withNBSP ? '&nbsp;·&nbsp' : ' · ')
+    .replace('•', withNBSP ? '&nbsp;·&nbsp' : ' · ')
+    .replace('=', withNBSP ? '&nbsp;=&nbsp' : ' = ');
 
 export const getConvertStringToFractionResult = (expression) => {
   const parts = expression.split(' ');
@@ -19,7 +21,7 @@ export const getConvertStringToFractionResult = (expression) => {
       html += `<td>${formatString(numerator)}</td>`;
       bottomRow += `<td>${formatString(denominator)}</td>`;
     } else {
-      html += `<td rowspan="2">&nbsp;${formatString(part)}&nbsp;</td>`;
+      html += `<td rowspan="2">${formatString(part, true)}</td>`;
     }
   });
 

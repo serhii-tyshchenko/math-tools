@@ -5,6 +5,7 @@ export const OPERATION_MAP = {
   SUBSTRACTION_IN_COLUMN: 'substraction-in-column',
   MULTIPLICATION_IN_COLUMN: 'multiplication-in-column',
   CONVERT_STRING_TO_FRACTION: 'convert-string-to-fraction',
+  NORMALIZE_EXPRESSION: 'normalize-expression',
 };
 
 export const OPERATION_LABEL_MAP = {
@@ -14,6 +15,7 @@ export const OPERATION_LABEL_MAP = {
   [OPERATION_MAP.PRIME_FACTORS]: 'Розклад на прості множники',
   [OPERATION_MAP.GCD_LCM]: 'НСД і НСК двох чисел',
   [OPERATION_MAP.CONVERT_STRING_TO_FRACTION]: 'Перетворення рядка на дріб',
+  [OPERATION_MAP.NORMALIZE_EXPRESSION]: 'Нормалізація виразу',
 };
 
 export const OPERATION_SYMBOL_MAP = {
@@ -24,4 +26,4 @@ export const OPERATION_SYMBOL_MAP = {
   [OPERATION_MAP.GCD_LCM]: 'і',
 };
 
-export const LETTER_STRING = 'abcdefghijklmnopqrstuvwxyz';
+export const VARIABLES = 'abcdefghijklmnopqrstuvwxyz';

@@ -1,4 +1,4 @@
-import { LETTER_STRING } from '../constants.js';
+import { VARIABLES } from '../constants.js';
 
 export const generateEmptyCells = (totalCells) =>
   totalCells > 0 ? Array(totalCells).fill('<td></td>').join('') : '';
@@ -33,8 +33,8 @@ export const getDifferenceOfTwoNumbers = (number1, number2) =>
 export const getMaxNumberLength = (number1, number2) =>
   Math.max(number1.toString().length, number2.toString().length);
 
-export const addEmToLetter = (letter) =>
-  letter
+export const addEmToVariables = (rawString) =>
+  rawString
     .split('')
-    .map((l) => (LETTER_STRING.includes(l) ? `<em>${l}</em>` : l))
+    .map((l) => (VARIABLES.includes(l) ? `<em>${l}</em>` : l))
     .join('');
