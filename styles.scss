@@ -36,3 +36,30 @@ html[data-bs-theme='dark'] {
     }
   }
 }
+
+.tp-fraction {
+  display: block;
+  width: max-content;
+  padding: 0;
+  text-align: center;
+  border: 0 !important;
+  margin-bottom: 0.5em;
+
+  td {
+    padding: 0 2px;
+    border-width: 0;
+
+    &.fraction__line {
+      border-width: 0 0 2px;
+    }
+  }
+
+  tr:first-child td {
+    border-style: solid;
+    border-width: 0 0 2px;
+  }
+
+  tr:first-child td[rowspan='2'] {
+    border-width: 0;
+  }
+}

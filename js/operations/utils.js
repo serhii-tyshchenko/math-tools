@@ -1,3 +1,5 @@
+import { LETTER_STRING } from '../constants.js';
+
 export const generateEmptyCells = (totalCells) =>
   totalCells > 0 ? Array(totalCells).fill('<td></td>').join('') : '';
 
@@ -30,3 +32,9 @@ export const getDifferenceOfTwoNumbers = (number1, number2) =>
 
 export const getMaxNumberLength = (number1, number2) =>
   Math.max(number1.toString().length, number2.toString().length);
+
+export const addEmToLetter = (letter) =>
+  letter
+    .split('')
+    .map((l) => (LETTER_STRING.includes(l) ? `<em>${l}</em>` : l))
+    .join('');
