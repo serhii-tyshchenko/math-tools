@@ -43,6 +43,16 @@ Object.entries(OPERATION_LABEL_MAP).forEach(([operation, label]) => {
   OPERATION_SELECTOR.appendChild(option);
 });
 
+const hideField = (field) => {
+  field.classList.add('d-none');
+  field.removeAttribute('required');
+};
+
+const showField = (field) => {
+  field.classList.remove('d-none');
+  field.setAttribute('required', true);
+};
+
 OPERATION_SELECTOR.addEventListener('change', () => {
   INPUT_CONTAINER.classList.remove('invisible');
   OUTPUT_CONTAINER.classList.add('invisible');
@@ -51,29 +61,22 @@ OPERATION_SELECTOR.addEventListener('change', () => {
 
   switch (operation) {
     case OPERATION_MAP.PRIME_FACTORS:
-      INPUT_FIELD_2.classList.add('d-none');
-      INPUT_FIELD_2.removeAttribute('required');
-      EXPRESSION_FIELD.classList.add('d-none');
-      EXPRESSION_FIELD.removeAttribute('required');
+      showField(INPUT_FIELD_1);
+      hideField(INPUT_FIELD_2);
+      hideField(EXPRESSION_FIELD);
       break;
     case OPERATION_MAP.GCD_LCM:
     case OPERATION_MAP.ADDITION_IN_COLUMN:
     case OPERATION_MAP.SUBSTRACTION_IN_COLUMN:
     case OPERATION_MAP.MULTIPLICATION_IN_COLUMN:
-      INPUT_FIELD_1.classList.remove('d-none');
-      INPUT_FIELD_1.setAttribute('required', true);
-      INPUT_FIELD_2.classList.remove('d-none');
-      INPUT_FIELD_2.setAttribute('required', true);
-      EXPRESSION_FIELD.classList.add('d-none');
-      EXPRESSION_FIELD.removeAttribute('required');
+      showField(INPUT_FIELD_1);
+      showField(INPUT_FIELD_2);
+      hideField(EXPRESSION_FIELD);
       break;
     case OPERATION_MAP.CONVERT_STRING_TO_FRACTION:
-      INPUT_FIELD_1.classList.add('d-none');
-      INPUT_FIELD_1.removeAttribute('required');
-      INPUT_FIELD_2.classList.add('d-none');
-      INPUT_FIELD_2.removeAttribute('required');
-      EXPRESSION_FIELD.classList.remove('d-none');
-      EXPRESSION_FIELD.setAttribute('required', true);
+      hideField(INPUT_FIELD_1);
+      hideField(INPUT_FIELD_2);
+      showField(EXPRESSION_FIELD);
       EXPRESSION_FIELD.placeholder = 'Введіть вираз, наприклад 1/2 + 1/2 = 1';
       break;
     default:
