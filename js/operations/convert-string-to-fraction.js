@@ -2,12 +2,13 @@ import { addEmToVariables } from './utils.js';
 
 const formatString = (str, withNBSP = false) =>
   addEmToVariables(str)
-    .replace('+', withNBSP ? '&nbsp;+&nbsp' : ' + ')
-    .replace('-', withNBSP ? '&nbsp;–&nbsp' : ' - ')
-    .replace('–', withNBSP ? '&nbsp;–&nbsp' : ' – ')
-    .replace('*', withNBSP ? '&nbsp;·&nbsp' : ' · ')
-    .replace('•', withNBSP ? '&nbsp;·&nbsp' : ' · ')
-    .replace('=', withNBSP ? '&nbsp;=&nbsp' : ' = ');
+    .replaceAll('+', withNBSP ? '&nbsp;+&nbsp' : ' + ')
+    .replaceAll('-', withNBSP ? '&nbsp;–&nbsp' : ' - ')
+    .replaceAll('–', withNBSP ? '&nbsp;–&nbsp' : ' – ')
+    .replaceAll('*', withNBSP ? '&nbsp;·&nbsp' : ' · ')
+    .replaceAll('•', withNBSP ? '&nbsp;·&nbsp' : ' · ')
+    .replaceAll('=', withNBSP ? '&nbsp;=&nbsp' : ' = ')
+    .replaceAll(':', withNBSP ? '&nbsp;:&nbsp' : ' : ');
 
 export const getConvertStringToFractionResult = (expression) => {
   const parts = expression.split(' ');
