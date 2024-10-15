@@ -9,6 +9,8 @@ const formatString = (str, withNBSP = false) =>
     .replaceAll('•', withNBSP ? '&nbsp;·&nbsp' : ' · ')
     .replaceAll('·', withNBSP ? '&nbsp;·&nbsp' : ' · ')
     .replaceAll('=', withNBSP ? '&nbsp;=&nbsp' : ' = ')
+    .replaceAll('≠', withNBSP ? '&nbsp;≠&nbsp' : ' ≠ ')
+    .replaceAll('≈', withNBSP ? '&nbsp;≈&nbsp' : ' ≈ ')
     .replaceAll(':', withNBSP ? '&nbsp;:&nbsp' : ' : ')
     .replaceAll('>', withNBSP ? '&nbsp;>&nbsp' : ' > ')
     .replaceAll('<', withNBSP ? '&nbsp;<&nbsp' : ' < ');
