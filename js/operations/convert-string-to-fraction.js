@@ -1,19 +1,30 @@
-import { addEmToVariables } from './utils.js';
+import {
+  addEmToVariables,
+  addPseudoEmToVariables,
+  normalizePseudoEmTag,
+  pipe,
+} from './utils.js';
 
-const formatString = (str, withNBSP = false) =>
-  addEmToVariables(str)
-    .replaceAll('+', withNBSP ? '&nbsp;+&nbsp' : ' + ')
-    .replaceAll('-', withNBSP ? '&nbsp;–&nbsp' : ' - ')
-    .replaceAll('–', withNBSP ? '&nbsp;–&nbsp' : ' – ')
-    .replaceAll('*', withNBSP ? '&nbsp;·&nbsp' : ' · ')
-    .replaceAll('•', withNBSP ? '&nbsp;·&nbsp' : ' · ')
-    .replaceAll('·', withNBSP ? '&nbsp;·&nbsp' : ' · ')
-    .replaceAll('=', withNBSP ? '&nbsp;=&nbsp' : ' = ')
-    .replaceAll('≠', withNBSP ? '&nbsp;≠&nbsp' : ' ≠ ')
-    .replaceAll('≈', withNBSP ? '&nbsp;≈&nbsp' : ' ≈ ')
-    .replaceAll(':', withNBSP ? '&nbsp;:&nbsp' : ' : ')
-    .replaceAll('>', withNBSP ? '&nbsp;>&nbsp' : ' > ')
-    .replaceAll('<', withNBSP ? '&nbsp;<&nbsp' : ' < ');
+const addSpaces = (str) =>
+  str
+    .replaceAll('+', '&nbsp;+&nbsp')
+    .replaceAll('–', '&nbsp;–&nbsp')
+    .replaceAll('-', '&nbsp;–&nbsp')
+    .replaceAll('·', '&nbsp;·&nbsp')
+    .replaceAll('*', '&nbsp;·&nbsp')
+    .replaceAll('•', '&nbsp;·&nbsp')
+    .replaceAll('=', '&nbsp;=&nbsp')
+    .replaceAll('≠', '&nbsp;≠&nbsp')
+    .replaceAll('≈', '&nbsp;≈&nbsp')
+    .replaceAll(':', '&nbsp;:&nbsp')
+    .replaceAll('<', '&nbsp;<&nbsp')
+    .replaceAll('>', '&nbsp;>&nbsp')
+    .replaceAll('≤', '&nbsp;≤&nbsp')
+    .replaceAll('≥', '&nbsp;≥&nbsp')
+    .replaceAll('&nbsp;&nbsp;', '&nbsp;');
+
+const formatString = (str) =>
+  pipe(addPseudoEmToVariables, addSpaces, normalizePseudoEmTag)(str);
 
 export const getConvertStringToFractionResult = (expression) => {
   const parts = expression.split(' ');
@@ -27,7 +38,7 @@ export const getConvertStringToFractionResult = (expression) => {
       html += `<td>${formatString(numerator)}</td>`;
       bottomRow += `<td>${formatString(denominator)}</td>`;
     } else {
-      html += `<td rowspan="2">${formatString(part, true)}</td>`;
+      html += `<td rowspan="2">${formatString(part)}</td>`;
     }
   });
 
