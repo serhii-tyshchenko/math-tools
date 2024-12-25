@@ -23,12 +23,16 @@
                         <option disabled selected>- Виберіть операцію -</option>
                     </select>
                 </div>
-                <div id="input-container" class="input-group invisible gap-2 align-items-center">
+                <div id="input-container" class="input-group invisible gap-2 align-items-center mb-2">
                     <input type="number" id="number-1" class="form-control" placeholder="Введіть число" min="0" required>
                     <span id="operation-symbol"></span>
                     <input type="number" id="number-2" class="form-control d-none" placeholder="Введіть число" min="0">
                     <input type="text" id="expression" class="form-control d-none" placeholder="Введіть строку">
                     <button type="submit" class="btn btn-secondary">Розрахунок</button>
+                </div>
+                <div id="add-column-container" class="input-group gap-2 d-none">
+                    <input type="checkbox" id="add-column" class="form-check form-switch">
+                    <label for="add-column" class="form-check-label">Додаткова колонка на початку</label>
                 </div>
             </form>
         </section>

@@ -1,4 +1,4 @@
-import { generateEmptyRow } from './utils.js';
+import { generateEmptyCells } from './utils.js';
 
 const EMPTY_SYMBOL = 'x';
 
@@ -37,7 +37,7 @@ const generateNumberCells = (number, totalCells, withBorder = false) => {
 const generateFactorCells = (number, totalCells) =>
   generateNumberCells(number, totalCells, true);
 
-const createPrimeFactorsTable = (primeFactors) => {
+const createPrimeFactorsTable = (primeFactors, extraColumn) => {
   const maxLengthNumber = Math.max(
     ...primeFactors.map(({ number }) => number.toString().length)
   );
@@ -46,29 +46,30 @@ const createPrimeFactorsTable = (primeFactors) => {
     ...primeFactors.map(({ factor }) => factor.toString().length)
   );
 
+  const extraColumnCells = extraColumn ? '<td></td>' : '';
+  const emptyCells = generateEmptyCells(maxLengthNumber + maxLengthFactor);
+
   const rows = primeFactors.map(({ number, factor }) => {
     const numberCells = generateNumberCells(number, maxLengthNumber);
     const factorCells = generateFactorCells(factor, maxLengthFactor);
-    return `<tr><td></td>${numberCells}${factorCells}<td></td></tr>`;
+    return `<tr><td></td>${extraColumnCells}${numberCells}${factorCells}<td></td></tr>`;
   });
-
-  const emptyRow = generateEmptyRow(maxLengthNumber + maxLengthFactor + 2);
 
   return `
     <table class="tp-cells">
       <tbody>
-        ${emptyRow}
+        <tr><td></td>${extraColumnCells}${emptyCells}<td></td></tr>
         ${rows.join('')}
-        ${emptyRow}
+        <tr><td></td>${extraColumnCells}${emptyCells}<td></td></tr>
       </tbody>
     </table>
   `;
 };
 
-export const getPrimeFactorsResult = (number) => {
+export const getPrimeFactorsResult = (number, extraColumn) => {
   const factors = getPrimeFactors(number);
   if (factors.length < 3) {
     return `${number} — просте число!`;
   }
-  return createPrimeFactorsTable(factors);
+  return createPrimeFactorsTable(factors, extraColumn);
 };

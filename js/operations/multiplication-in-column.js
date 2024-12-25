@@ -1,39 +1,29 @@
 import {
   generateCells,
   generateCellsWithBorder,
-  generateEmptyRow,
   generateEmptyCells,
   generateEmptyCellsWithBorder,
 } from './utils.js';
 
-const generateNumber1Row = (number, totalCells) => {
+const generateNumber1Cells = (number, totalCells) => {
   const cells = generateCells(number);
   const offsetBefore = generateEmptyCells(
     totalCells - number.toString().length
   );
 
-  return `<tr><td></td><td rowspan="2">×</td>${offsetBefore}${cells}<td></td></tr>`;
+  return `<td rowspan="2">×</td>${offsetBefore}${cells}`;
 };
 
-const generateNumber2Row = (number, totalCells) => {
+const generateNumber2Cells = (number, totalCells) => {
   const cells = generateCellsWithBorder(number);
   const offsetBefore = generateEmptyCellsWithBorder(
     totalCells - number.toString().length
   );
 
-  return `<tr><td></td>${offsetBefore}${cells}<td></td></tr>`;
+  return `${offsetBefore}${cells}`;
 };
 
-const generateResultsRow = (number, totalCells) => {
-  const cells = generateCellsWithBorder(number, 'top');
-  const offsetBefore = generateEmptyCells(
-    totalCells - number.toString().length + 1
-  );
-
-  return `<tr><td></td>${offsetBefore}${cells}<td></td></tr>`;
-};
-
-const generateIntermediateRow = (number, stepsCount, index) => {
+const generateIntermediateCells = (number, stepsCount, index) => {
   if (number === 0) {
     return '';
   }
@@ -41,13 +31,15 @@ const generateIntermediateRow = (number, stepsCount, index) => {
   const offsetBefore = generateEmptyCells(stepsCount - index);
   const offsetAfter = generateEmptyCells(index);
 
-  return `<tr><td></td>${offsetBefore}${cells}${offsetAfter}<td></td></tr>`;
+  return `${offsetBefore}${cells}${offsetAfter}`;
 };
 
-const generateIntermediateRows = (number1, number2) => {
+const generateIntermediateRows = (number1, number2, extraColumn) => {
   if (number2.toString().length === 1) {
     return '';
   }
+
+  const extraColumnCells = extraColumn ? '<td></td>' : '';
 
   const intermediateResults = number2
     .toString()
@@ -56,38 +48,53 @@ const generateIntermediateRows = (number1, number2) => {
     .map((digit) => Number(digit) * number1);
 
   return intermediateResults
-    .map((intermediateResult, index) =>
-      generateIntermediateRow(
-        intermediateResult,
-        intermediateResults.length,
-        index
-      )
+    .map(
+      (intermediateResult, index) =>
+        `<tr><td></td>${extraColumnCells}${generateIntermediateCells(
+          intermediateResult,
+          intermediateResults.length,
+          index
+        )}<td></td></tr>`
     )
     .join('');
 };
 
-export const getMultiplicationInColumnResult = (number1, number2) => {
+const generateResultCells = (number, totalCells) => {
+  const cells = generateCellsWithBorder(number, 'top');
+  const offsetBefore = generateEmptyCells(
+    totalCells - number.toString().length + 1
+  );
+
+  return `${offsetBefore}${cells}`;
+};
+
+export const getMultiplicationInColumnResult = (
+  number1,
+  number2,
+  extraColumn
+) => {
   const result = number1 * number2;
   const maxLength = result.toString().length;
 
-  const number1Row = generateNumber1Row(number1, maxLength);
-  const number2Row = generateNumber2Row(number2, maxLength);
+  const number1Cells = generateNumber1Cells(number1, maxLength);
+  const number2Cells = generateNumber2Cells(number2, maxLength);
   const intermediateRows = generateIntermediateRows(
     number1,
     number2,
-    maxLength
+    extraColumn
   );
-  const resultRow = generateResultsRow(result, maxLength);
-  const emptyRow = generateEmptyRow(maxLength + 3);
+  const resultCells = generateResultCells(result, maxLength);
+  const emptyCells = generateEmptyCells(maxLength + 1);
+  const extraColumnCells = extraColumn ? '<td></td>' : '';
 
   return `<table class="tp-cells">
       <tbody>
-          ${emptyRow}
-          ${number1Row}
-          ${number2Row}
+          <tr><td></td>${extraColumnCells}${emptyCells}<td></td></tr>
+          <tr><td></td>${extraColumnCells}${number1Cells}<td></td></tr>
+          <tr><td></td>${extraColumnCells}${number2Cells}<td></td></tr>
           ${intermediateRows}
-          ${resultRow}
-          ${emptyRow}
+          <tr><td></td>${extraColumnCells}${resultCells}<td></td></tr>
+          <tr><td></td>${extraColumnCells}${emptyCells}<td></td></tr>
       </tbody>
       </table>`;
 };
