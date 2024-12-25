@@ -4,6 +4,7 @@ import {
   getAdditionInColumnResult,
   getSubtractionInColumnResult,
   getMultiplicationInColumnResult,
+  getDivisionInColumnResult,
   getConvertStringToFractionResult,
   getNormalizeExpressionResult,
 } from './js/operations/index.js';
@@ -33,9 +34,11 @@ const OPERATION_HANDLER_MAP = {
     getSubtractionInColumnResult(+num1, +num2),
   [OPERATION_MAP.MULTIPLICATION_IN_COLUMN]: (num1, num2) =>
     getMultiplicationInColumnResult(+num1, +num2),
-  [OPERATION_MAP.CONVERT_STRING_TO_FRACTION]: (num1, num2, expression) =>
+  [OPERATION_MAP.DIVISION_IN_COLUMN]: (num1, num2) =>
+    getDivisionInColumnResult(+num1, +num2),
+  [OPERATION_MAP.CONVERT_STRING_TO_FRACTION]: (_1, _2, expression) =>
     getConvertStringToFractionResult(expression),
-  [OPERATION_MAP.NORMALIZE_EXPRESSION]: (num1, num2, expression) =>
+  [OPERATION_MAP.NORMALIZE_EXPRESSION]: (_1, _2, expression) =>
     getNormalizeExpressionResult(expression),
 };
 
@@ -72,6 +75,7 @@ OPERATION_SELECTOR.addEventListener('change', () => {
     case OPERATION_MAP.ADDITION_IN_COLUMN:
     case OPERATION_MAP.SUBSTRACTION_IN_COLUMN:
     case OPERATION_MAP.MULTIPLICATION_IN_COLUMN:
+    case OPERATION_MAP.DIVISION_IN_COLUMN:
       showField(INPUT_FIELD_1);
       showField(INPUT_FIELD_2);
       hideField(EXPRESSION_FIELD);
