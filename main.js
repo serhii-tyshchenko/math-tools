@@ -37,8 +37,8 @@ const OPERATION_HANDLER_MAP = {
     getSubtractionInColumnResult(+num1, +num2, extraColumn),
   [OPERATION_MAP.MULTIPLICATION_IN_COLUMN]: (num1, num2, _exp, extraColumn) =>
     getMultiplicationInColumnResult(+num1, +num2, extraColumn),
-  [OPERATION_MAP.DIVISION_IN_COLUMN]: (num1, num2) =>
-    getDivisionInColumnResult(+num1, +num2),
+  [OPERATION_MAP.DIVISION_IN_COLUMN]: (num1, num2, _, extraColumn) =>
+    getDivisionInColumnResult(+num1, +num2, extraColumn),
   [OPERATION_MAP.CONVERT_STRING_TO_FRACTION]: (_1, _2, expression) =>
     getConvertStringToFractionResult(expression),
   [OPERATION_MAP.NORMALIZE_EXPRESSION]: (_1, _2, expression) =>

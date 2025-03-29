@@ -40,7 +40,7 @@ const getDivisionSteps = (number1, number2) => {
 const getResultPartLength = (number2, result) =>
   Math.max(number2.toString().length, result.toString().length);
 
-const generateFirstRow = (number1, number2, result) => {
+const generateFirstRow = (number1, number2, result, extraColumn) => {
   const number1Cells = generateCells(number1);
   const number2FirstCell = generateCellsWithBorder(
     +number2.toString()[0],
@@ -50,13 +50,14 @@ const generateFirstRow = (number1, number2, result) => {
   const number2RestCells = number2.toString().slice(1)
     ? generateCellsWithBorder(number2.toString().slice(1), 'bottom')
     : '';
+  const extraColumnCells = extraColumn ? '<td></td>' : '';
 
-  return `<tr><td></td><td rowspan="2">–</td>${number1Cells}${number2FirstCell}${number2RestCells}${generateEmptyCellsWithBorder(
+  return `<tr>${extraColumnCells}<td></td><td rowspan="2">–</td>${number1Cells}${number2FirstCell}${number2RestCells}${generateEmptyCellsWithBorder(
     resultPartLength - number2.toString().length
   )}<td></td></tr>`;
 };
 
-const generateSecondRow = (number1, number2, result) => {
+const generateSecondRow = (number1, number2, result, extraColumn) => {
   const intermediateResult = +result.toString()[0] * number2;
   const intermediateCells = generateCellsWithBorder(
     intermediateResult,
@@ -69,26 +70,29 @@ const generateSecondRow = (number1, number2, result) => {
     +result.toString()[0],
     'left'
   );
+  const extraColumnCells = extraColumn ? '<td></td>' : '';
   const resultPartLength = getResultPartLength(number2, result);
   const resultRestCells = +result.toString().slice(1)
     ? generateCells(+result.toString().slice(1))
     : generateEmptyCells(resultPartLength - result.toString().length);
 
-  return `<tr><td></td>${intermediateCells}${intermediateResultOffset}${resultFirstCell}${resultRestCells}<td></td></tr>`;
+  return `<tr>${extraColumnCells}<td></td>${intermediateCells}${intermediateResultOffset}${resultFirstCell}${resultRestCells}<td></td></tr>`;
 };
 
-const generateIntermediateRows = (number1, number2, result) => {
+const generateIntermediateRows = (number1, number2, result, extraColumn) => {
   const steps = getDivisionSteps(number1, number2);
   let output = '';
   let offset = 0;
+
+  const extraColumnCells = extraColumn ? '<td></td>' : '';
 
   const resultPartLength = getResultPartLength(number2, result);
 
   for (let i = 1; i < steps.length; i++) {
     if (steps[i - 1].first - steps[i - 1].second === 0) {
-      output += `<tr><td></td>${generateEmptyCells(offset + 2)}${generateCells(
-        0
-      )}${generateEmptyCells(
+      output += `<tr>${extraColumnCells}<td></td>${generateEmptyCells(
+        offset + 2
+      )}${generateCells(0)}${generateEmptyCells(
         number1.toString().length + resultPartLength + offset - 1
       )}</tr>`;
     }
@@ -102,8 +106,10 @@ const generateIntermediateRows = (number1, number2, result) => {
       (i - 1);
     if (steps[i].first - steps[i].second === 0) offset++;
 
-    output += `<tr><td></td>${generateEmptyCells(offset)}${
-      secondRow ? '<td rowspan="2">–</td>' : '<td></td>'
+    output += `<tr>${extraColumnCells}<td></td>${generateEmptyCells(offset)}${
+      secondRow
+        ? `${extraColumnCells}<td rowspan="2">–</td>`
+        : `${extraColumnCells}<td></td>`
     }${firstRow}${generateEmptyCells(
       number1.toString().length -
         offset -
@@ -113,7 +119,7 @@ const generateIntermediateRows = (number1, number2, result) => {
     )}</tr>
     ${
       secondRow
-        ? `<tr>${generateEmptyCells(
+        ? `<tr>${extraColumnCells}${generateEmptyCells(
             offset
           )}<td></td>${generateEmptyCellsWithBorder(
             steps[i].first.toString().length - steps[i].second.toString().length
@@ -128,9 +134,9 @@ const generateIntermediateRows = (number1, number2, result) => {
     }`;
   }
   if (steps[steps.length - 1].first - steps[steps.length - 1].second === 0) {
-    output += `<tr><td></td>${generateEmptyCells(offset + 2)}${generateCells(
-      0
-    )}${generateEmptyCells(
+    output += `<tr>${extraColumnCells}<td></td>${generateEmptyCells(
+      offset + 2
+    )}${generateCells(0)}${generateEmptyCells(
       number1.toString().length - offset + resultPartLength - 1
     )}</tr>`;
   }
@@ -138,7 +144,7 @@ const generateIntermediateRows = (number1, number2, result) => {
   return output;
 };
 
-export const getDivisionInColumnResult = (number1, number2) => {
+export const getDivisionInColumnResult = (number1, number2, extraColumn) => {
   if (number2 === 0) {
     return 'На нуль ділити не можна!';
   }
@@ -146,12 +152,17 @@ export const getDivisionInColumnResult = (number1, number2) => {
     return 'Ділене має бути більше дільника!';
   }
   const result = Math.floor(number1 / number2);
-  const firstRow = generateFirstRow(number1, number2, result);
-  const secondRow = generateSecondRow(number1, number2, result);
-  const intermediateRows = generateIntermediateRows(number1, number2, result);
+  const firstRow = generateFirstRow(number1, number2, result, extraColumn);
+  const secondRow = generateSecondRow(number1, number2, result, extraColumn);
+  const intermediateRows = generateIntermediateRows(
+    number1,
+    number2,
+    result,
+    extraColumn
+  );
   const resultPartLength = getResultPartLength(number2, result);
   const emptyRow = generateEmptyRow(
-    number1.toString().length + resultPartLength + 3
+    number1.toString().length + resultPartLength + 3 + (extraColumn ? 1 : 0)
   );
 
   return `<table class="tp-cells">
